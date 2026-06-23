@@ -1,0 +1,124 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 36 38% 97%;
+    --foreground: 0 0% 23%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 23%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 23%;
+    --primary: 110 9% 58%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 36 32% 92%;
+    --secondary-foreground: 0 0% 23%;
+    --muted: 36 32% 92%;
+    --muted-foreground: 28 12% 55%;
+    --accent: 36 32% 92%;
+    --accent-foreground: 0 0% 23%;
+    --destructive: 0 56% 66%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 36 32% 92%;
+    --input: 36 32% 92%;
+    --ring: 110 9% 58%;
+    --radius: 0.75rem;
+
+    --accent-color: #8b9b8e;
+  }
+
+  .dark {
+    --background: 60 4% 10%;
+    --foreground: 0 0% 93%;
+    --card: 60 4% 16%;
+    --card-foreground: 0 0% 93%;
+    --popover: 60 4% 16%;
+    --popover-foreground: 0 0% 93%;
+    --primary: 110 9% 58%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 60 4% 22%;
+    --secondary-foreground: 0 0% 93%;
+    --muted: 60 4% 22%;
+    --muted-foreground: 28 12% 55%;
+    --accent: 60 4% 22%;
+    --accent-foreground: 0 0% 93%;
+    --destructive: 0 56% 66%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 60 4% 22%;
+    --input: 60 4% 22%;
+    --ring: 110 9% 58%;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  html,
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: 'kern', 'liga', 'calt';
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  html {
+    overscroll-behavior: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    min-height: 100dvh;
+    background-color: hsl(var(--background));
+  }
+
+  button,
+  [role='button'] {
+    @apply select-none;
+  }
+}
+
+@layer utilities {
+  .accent-bg {
+    background-color: var(--accent-color);
+  }
+  .accent-text {
+    color: var(--accent-color);
+  }
+  .accent-border {
+    border-color: var(--accent-color);
+  }
+  .accent-ring {
+    --tw-ring-color: var(--accent-color);
+  }
+  .accent-from {
+    --tw-gradient-from: var(--accent-color) var(--tw-gradient-from-position);
+    --tw-gradient-to: rgb(0 0 0 / 0) var(--tw-gradient-to-position);
+    --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+  }
+
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
+  }
+  .scrollbar-none {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .pt-safe {
+    padding-top: env(safe-area-inset-top);
+  }
+  .pb-safe {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+}
+
+/* Animated background for welcome screen */
+.welcome-bg {
+  background: linear-gradient(180deg, #faf8f5 0%, #f5f1ec 50%, #e8ded0 100%);
+}

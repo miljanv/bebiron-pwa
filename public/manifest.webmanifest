@@ -1,0 +1,43 @@
+{
+  "name": "Bebiron",
+  "short_name": "Bebiron",
+  "description": "Track every little moment.",
+  "id": "/?source=pwa",
+  "start_url": "/?source=pwa",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#FAF8F5",
+  "theme_color": "#FAF8F5",
+  "lang": "sr",
+  "dir": "ltr",
+  "categories": ["lifestyle", "parenting", "health"],
+  "icons": [
+    {
+      "src": "/icons/icon-512.png",
+      "type": "image/png",
+      "sizes": "192x192",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-512.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/maskable-icon.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "maskable"
+    }
+  ],
+  "screenshots": [],
+  "shortcuts": [
+    {
+      "name": "Početna",
+      "url": "/home",
+      "icons": [{ "src": "/icons/icon-512.png", "sizes": "192x192" }]
+    }
+  ]
+}
