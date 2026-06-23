@@ -66,11 +66,15 @@
   html {
     overscroll-behavior: none;
     -webkit-tap-highlight-color: transparent;
+    overflow-x: hidden;
+    max-width: 100%;
   }
 
   body {
     min-height: 100dvh;
     background-color: hsl(var(--background));
+    overflow-x: hidden;
+    max-width: 100%;
   }
 
   button,

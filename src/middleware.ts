@@ -64,6 +64,12 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(url);
   }
 
+  if (user && (path === '/' || path === '')) {
+    const url = request.nextUrl.clone();
+    url.pathname = localizedPath(pathname, '/home');
+    return NextResponse.redirect(url);
+  }
+
   if (user && (path === '/welcome' || path === '/login' || path === '/register')) {
     const url = request.nextUrl.clone();
     url.pathname = localizedPath(pathname, '/home');

@@ -119,14 +119,14 @@ export function LanguageSwitcher({ variant = 'settings' }: { variant?: Variant }
           type="button"
           disabled={pending}
           className={cn(
-            'flex w-full items-center justify-between gap-3 rounded-brand-md border border-border bg-card px-4 py-3.5 text-left text-sm font-semibold transition-opacity hover:opacity-95',
+            'flex w-full max-w-full min-w-0 items-center justify-between gap-2 rounded-brand-md border border-border bg-card px-3 py-3.5 text-left text-sm font-semibold transition-opacity hover:opacity-95 sm:gap-3 sm:px-4',
           )}
         >
-          <div className="flex items-center gap-3">
-            <Globe className="h-5 w-5 text-brand-text-muted" />
-            <span>{localeLabel(locale, t)}</span>
+          <div className="flex min-w-0 items-center gap-2 sm:gap-3">
+            <Globe className="h-5 w-5 shrink-0 text-brand-text-muted" />
+            <span className="truncate">{localeLabel(locale, t)}</span>
           </div>
-          <ChevronDown className="h-5 w-5 text-brand-text-muted" />
+          <ChevronDown className="h-5 w-5 shrink-0 text-brand-text-muted" />
         </button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="min-w-[14rem]">

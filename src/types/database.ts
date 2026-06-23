@@ -114,6 +114,52 @@ type BabyShareInviteInsert = {
   created_at?: string | null;
 };
 
+type PushSubscriptionRow = {
+  id: string;
+  user_id: string;
+  endpoint: string;
+  p256dh: string;
+  auth: string;
+  user_agent: string | null;
+  created_at: string;
+  updated_at: string;
+};
+
+type PushSubscriptionInsert = {
+  id?: string;
+  user_id: string;
+  endpoint: string;
+  p256dh: string;
+  auth: string;
+  user_agent?: string | null;
+  created_at?: string;
+  updated_at?: string;
+};
+
+type FeedingReminderJobRow = {
+  id: string;
+  user_id: string;
+  baby_id: string;
+  baby_name: string;
+  fire_at: string;
+  sent_at: string | null;
+  locale: string;
+  created_at: string;
+  updated_at: string;
+};
+
+type FeedingReminderJobInsert = {
+  id?: string;
+  user_id: string;
+  baby_id: string;
+  baby_name: string;
+  fire_at: string;
+  sent_at?: string | null;
+  locale?: string;
+  created_at?: string;
+  updated_at?: string;
+};
+
 export type Database = {
   __InternalSupabase: {
     PostgrestVersion: '12';
@@ -154,6 +200,18 @@ export type Database = {
         Row: BabyShareInviteRow;
         Insert: BabyShareInviteInsert;
         Update: Partial<BabyShareInviteInsert>;
+        Relationships: [];
+      };
+      push_subscriptions: {
+        Row: PushSubscriptionRow;
+        Insert: PushSubscriptionInsert;
+        Update: Partial<PushSubscriptionInsert>;
+        Relationships: [];
+      };
+      feeding_reminder_jobs: {
+        Row: FeedingReminderJobRow;
+        Insert: FeedingReminderJobInsert;
+        Update: Partial<FeedingReminderJobInsert>;
         Relationships: [];
       };
     };

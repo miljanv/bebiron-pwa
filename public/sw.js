@@ -1,5 +1,5 @@
 /* eslint-disable */
-const CACHE = 'bebiron-v2';
+const CACHE = 'bebiron-v3';
 const APP_SHELL = [
   '/',
   '/offline.html',
@@ -25,13 +25,64 @@ self.addEventListener('activate', (event) => {
   self.clients.claim();
 });
 
+self.addEventListener('push', (event) => {
+  let payload = {
+    title: 'Bebiron',
+    body: 'Podsetnik za hranjenje',
+    url: '/home',
+    tag: 'bebiron-feed',
+    data: {},
+  };
+
+  try {
+    if (event.data) {
+      payload = { ...payload, ...event.data.json() };
+    }
+  } catch {
+    /* use defaults */
+  }
+
+  event.waitUntil(
+    self.registration.showNotification(payload.title, {
+      body: payload.body,
+      icon: '/icons/icon-512.png',
+      badge: '/icons/icon-512.png',
+      tag: payload.tag,
+      data: { url: payload.url, ...payload.data },
+      vibrate: [200, 100, 200],
+    }),
+  );
+});
+
+self.addEventListener('notificationclick', (event) => {
+  event.notification.close();
+  const targetUrl = event.notification.data?.url || '/home';
+
+  event.waitUntil(
+    self.clients.matchAll({ type: 'window', includeUncontrolled: true }).then((clients) => {
+      for (const client of clients) {
+        if ('focus' in client) {
+          client.focus();
+          if ('navigate' in client) {
+            return client.navigate(targetUrl);
+          }
+          return client;
+        }
+      }
+      if (self.clients.openWindow) {
+        return self.clients.openWindow(targetUrl);
+      }
+      return undefined;
+    }),
+  );
+});
+
 self.addEventListener('fetch', (event) => {
   const { request } = event;
   if (request.method !== 'GET') return;
 
   const url = new URL(request.url);
 
-  // Network-first for HTML navigations
   if (request.mode === 'navigate') {
     event.respondWith(
       fetch(request)
@@ -47,7 +98,6 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // Stale-while-revalidate for same-origin assets
   if (url.origin === self.location.origin) {
     event.respondWith(
       caches.open(CACHE).then(async (cache) => {

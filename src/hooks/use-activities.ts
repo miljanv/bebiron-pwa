@@ -1,7 +1,9 @@
 'use client';
 
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useLocale } from 'next-intl';
 
+import { syncFeedingReminders } from '@/lib/push/client';
 import { activityService } from '@/services/supabase';
 import type { NewActivity } from '@/types';
 
@@ -22,20 +24,26 @@ export function useActivities() {
 
 export function useCreateActivity() {
   const qc = useQueryClient();
+  const locale = useLocale();
   return useMutation({
     mutationFn: (input: NewActivity) => activityService.create(input),
-    onSuccess: () => {
+    onSuccess: (activity) => {
       qc.invalidateQueries({ queryKey: ACTIVITIES_KEY });
+      if (activity.type === 'feed') {
+        void syncFeedingReminders(locale);
+      }
     },
   });
 }
 
 export function useDeleteActivity() {
   const qc = useQueryClient();
+  const locale = useLocale();
   return useMutation({
     mutationFn: (id: string) => activityService.delete(id),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ACTIVITIES_KEY });
+      void syncFeedingReminders(locale);
     },
   });
 }

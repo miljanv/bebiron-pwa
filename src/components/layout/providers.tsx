@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 
 import { useAccentStore } from '@/stores/use-accent-store';
 
+import { PushNotificationBootstrap } from '../shared/push-notification-bootstrap';
 import { Toaster } from '../ui/sonner';
 
 function AccentColorBridge() {
@@ -32,6 +33,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
   return (
     <QueryClientProvider client={qc}>
       <AccentColorBridge />
+      <PushNotificationBootstrap />
       {children}
       <Toaster />
     </QueryClientProvider>

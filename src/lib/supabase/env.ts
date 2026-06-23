@@ -23,7 +23,7 @@ export function assertSupabaseConfig(): void {
   const key = getSupabaseAnonKey();
   if (!url || !key) {
     throw new Error(
-      'Missing Supabase env vars. Set NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY in .env',
+      'Missing Supabase env vars. Set NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY in .env (local) or Vercel Project Settings → Environment Variables.',
     );
   }
 }

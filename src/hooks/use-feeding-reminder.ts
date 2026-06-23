@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useLocale, useTranslations } from 'next-intl';
 
 import type { Locale } from '@/lib/i18n/config';
@@ -8,8 +8,10 @@ import {
   computeFeedReminderSchedule,
   formatFeedReminderCardText,
   getLastFeedAt,
+  getReminderNotificationBody,
   type FeedReminderSchedule,
 } from '@/lib/utils/feed-reminder';
+import { showLocalFeedingReminder } from '@/lib/push/client';
 
 import { useActivities } from './use-activities';
 import { useBabies } from './use-babies';
@@ -22,6 +24,7 @@ export function useFeedingReminder(babyId: string | null) {
   const { data: activities = [] } = useActivities();
   const { data: babies = [] } = useBabies();
   const [tick, setTick] = useState(0);
+  const firedRef = useRef<string | null>(null);
 
   const baby = babies.find((b) => b.id === babyId);
   const enabled = settings?.feedingReminderEnabled ?? false;
@@ -43,6 +46,19 @@ export function useFeedingReminder(babyId: string | null) {
     const id = window.setInterval(() => setTick((x) => x + 1), intervalMs);
     return () => window.clearInterval(id);
   }, [schedule?.fireAt.getTime()]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
+    if (!schedule || !baby || !enabled) return;
+    const fireKey = `${baby.id}-${schedule.fireAt.getTime()}`;
+    if (Date.now() < schedule.fireAt.getTime()) return;
+    if (firedRef.current === fireKey) return;
+    firedRef.current = fireKey;
+
+    const title = t('notifications.reminderTitle');
+    const body = getReminderNotificationBody(baby.name, locale, (k, p) => t(k, p));
+
+    void showLocalFeedingReminder(title, body, `bebiron-feed-${baby.id}`);
+  }, [schedule, baby, enabled, locale, t, tick]);
 
   const reminderText =
     schedule && baby
