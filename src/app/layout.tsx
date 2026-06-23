@@ -76,7 +76,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
         <meta name="format-detection" content="telephone=no" />
       </head>
-      <body className="font-sans">{children}</body>
+      <body className="overflow-x-clip font-sans">{children}</body>
     </html>
   );
 }

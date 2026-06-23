@@ -65,7 +65,12 @@ function SettingsCard({
   className?: string;
 }) {
   return (
-    <div className={cn('overflow-hidden rounded-brand-lg bg-card shadow-brand', className)}>
+    <div
+      className={cn(
+        'box-border w-full max-w-full overflow-hidden rounded-brand-lg bg-card shadow-brand',
+        className,
+      )}
+    >
       {children}
     </div>
   );
@@ -93,30 +98,32 @@ function SettingsRow({
   const inner = (
     <div
       className={cn(
-        'flex min-w-0 items-center gap-3 p-4 sm:gap-4',
+        'box-border flex w-full max-w-full min-w-0 items-start gap-3 p-4',
         !isLast && 'border-b border-border',
       )}
     >
       <span
-        className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full"
+        className="mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-full"
         style={{ backgroundColor: iconBg }}
       >
         {icon}
       </span>
-      <div className="min-w-0 flex-1">
+      <div className="min-w-0 flex-1 overflow-hidden">
         <p
-          className={cn('break-words text-sm font-semibold leading-snug')}
+          className="break-words text-sm font-semibold leading-snug [overflow-wrap:anywhere]"
           style={titleColor ? { color: titleColor } : undefined}
         >
           {title}
         </p>
         {subtitle ? (
-          <p className="mt-0.5 break-words text-xs leading-snug text-brand-text-muted">
+          <p className="mt-0.5 break-words text-xs leading-snug text-brand-text-muted [overflow-wrap:anywhere]">
             {subtitle}
           </p>
         ) : null}
       </div>
-      <div className="shrink-0">{right ?? <ChevronRight className="h-5 w-5 text-brand-text-muted" />}</div>
+      <div className="shrink-0 pt-0.5">
+        {right ?? <ChevronRight className="h-5 w-5 text-brand-text-muted" />}
+      </div>
     </div>
   );
 
@@ -220,7 +227,7 @@ export function SettingsView() {
   const feedReminderOn = settings?.feedingReminderEnabled ?? false;
 
   return (
-    <div className="mx-auto box-border w-full max-w-3xl overflow-x-hidden px-4 pb-12 pt-safe sm:px-5 lg:pt-8">
+    <div className="contain-layout mx-auto box-border w-full max-w-3xl px-3 pb-12 pt-safe sm:px-4 lg:px-5 lg:pt-8">
       <h1 className="break-words pt-4 text-2xl font-bold text-brand-text xs:text-3xl">
         {t('settings.title')}
       </h1>
@@ -277,15 +284,15 @@ export function SettingsView() {
           isLast={!feedReminderOn}
         />
         {feedReminderOn ? (
-          <div className="border-t border-border px-3 pb-4 sm:px-4">
-            <p className="mt-3 break-words text-xs leading-relaxed text-brand-text-muted">
+          <div className="box-border w-full max-w-full border-t border-border px-3 pb-4 sm:px-4">
+            <p className="mt-3 break-words text-xs leading-relaxed text-brand-text-muted [overflow-wrap:anywhere]">
               {t('settings.pushReminderHint')}
             </p>
-            <p className="mt-2 break-words text-xs leading-relaxed text-brand-text-muted">
+            <p className="mt-2 break-words text-xs leading-relaxed text-brand-text-muted [overflow-wrap:anywhere]">
               {t('settings.reminderDesc')}
             </p>
-            <div className="mt-3 flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-3">
-              <label className="min-w-0 text-sm font-semibold leading-snug text-brand-text sm:flex-1">
+            <div className="mt-3 grid w-full max-w-full grid-cols-1 gap-2">
+              <label className="text-sm font-semibold leading-snug text-brand-text [overflow-wrap:anywhere]">
                 {t('settings.minutesAfterFeed')}
               </label>
               <Input
@@ -294,7 +301,7 @@ export function SettingsView() {
                 maxLength={4}
                 value={delayMinutes}
                 onChange={(e) => setDelayMinutes(e.target.value)}
-                className="w-full shrink-0 sm:w-20 sm:text-center"
+                className="w-24 max-w-full text-center"
               />
             </div>
             <Button
@@ -320,7 +327,7 @@ export function SettingsView() {
           onClick={() => setJoinBabyOpen(true)}
           isLast
         />
-        <p className="break-words px-3 pb-4 text-xs leading-relaxed text-brand-text-muted sm:px-4">
+        <p className="break-words px-3 pb-4 text-xs leading-relaxed text-brand-text-muted [overflow-wrap:anywhere] sm:px-4">
           {t('settings.familyHint', { max: MAX_OWNED_BABIES, count: ownedCount })}
         </p>
       </SettingsCard>

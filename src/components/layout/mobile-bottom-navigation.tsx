@@ -17,9 +17,9 @@ export function MobileBottomNavigation({ hidden }: { hidden?: boolean }) {
   const pathname = usePathname();
   if (hidden) return null;
   return (
-    <nav
+      <nav
       aria-label="Primary"
-      className="fixed bottom-0 left-0 right-0 z-30 border-t border-border bg-card pb-safe lg:hidden"
+      className="fixed bottom-0 left-0 right-0 z-30 box-border w-full max-w-full overflow-x-clip border-t border-border bg-card pb-safe lg:hidden"
     >
       <ul className="mx-auto flex max-w-md items-stretch justify-around px-2 pt-2">
         {items.map(({ href, icon: Icon, labelKey }) => {
